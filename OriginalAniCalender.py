@@ -1,48 +1,73 @@
 from tkinter import Tk, Canvas
-from datetime import date, datetime
+from datetime import datetime
+from zoneinfo import ZoneInfo  # Requires Python 3.9+
+
 def getCurrentEvent(event_details):
+    # Split the string into event name and datetime string
     current_event = event_details.split(',')
-    event_date = datetime.strptime(current_event[1], '%m/%d/%y').date()
-    current_event[1] = event_date
+    # Parse the event datetime using the given format (day/month/year hour:minute)
+    event_datetime = datetime.strptime(current_event[1], '%d/%m/%y %H:%M')
+    # Attach the CST timezone (America/Chicago)
+    
+    # event_datetime = event_datetime.replace(tzinfo=ZoneInfo("America/Chicago"))
+    current_event[1] = event_datetime
     return current_event
 
 def get_events():
-    list_events = []
-    list_events.append(getCurrentEvent('School Starts,1/7/25'))
-    list_events.append(getCurrentEvent('Anirudh\'s Birthday,05/06/25'))
-    list_events.append(getCurrentEvent('Mumma\'s Birthday,07/06/25'))
-    list_events.append(getCurrentEvent('Papa\'s Birthday,01/03/26'))
-    list_events.append(getCurrentEvent('Book Share Commercial,01/31/25'))
-    list_events.append(getCurrentEvent('New Book Share Commercial,02/27/25'))
-    return list_events
-    
-def days_between_dates(date1, date2):
-    time_between = str(date1-date2)
-    number_of_days = time_between.split(' ')
-    return number_of_days[0]
+    # Change the event to something happening at 10:28 (22:28) today.
+    return [
+        getCurrentEvent("Test Event,05/04/25 22:30"),
+        getCurrentEvent("Test Event 2,05/04/25 15:30"),
+        getCurrentEvent("Test Event 3,06/04/25 15:30")
+    ]
 
-root = Tk()
-c = Canvas(root , width=10000, height=10000, bg='black')
-c.pack()
-c.create_text(100, 50, anchor='w', fill='blue', font='Arial 36 bold underline', text = 'Anirudh\'s Countdown Calendar')
+def get_time_left(future_datetime, now_datetime):
+    print (future_datetime, now_datetime)
+    delta = future_datetime - now_datetime
+    seconds_left = delta.total_seconds()
+    if seconds_left < 0:
+        return "Event Passed", "gray"
+    hours = int(seconds_left / 3600)
+    minutes = int((seconds_left % 3600) // 60)
 
-events = get_events()
-today = date.today()
-verticle_sapce = 100
-events.sort(key=lambda x: x[1])
-for event in events:
-    event_name = event[0]
-    days_until = days_between_dates(event[1], today)
-    display = 'It is %s days until %s ' % (days_until, event_name)
-    if (int(days_until) <=7):
-        text_col = 'red'
-    elif (int(days_until) <=14):
-        text_col = 'yellow'
+    # Determine the color based on hours left
+    if hours >= 5:
+        color = "lightgreen"
+    elif 3 <= hours < 5:
+        color = "yellow"
     else:
-        text_col = 'green'
-    c.create_text(100, verticle_sapce, anchor='w', fill=text_col, font='Courier 28 ', text = display)
-    verticle_sapce += 30
+        color = "red"
 
+    return f"{hours} hrs {minutes} mins", color
+
+# Setup the main GUI window
+root = Tk()
+c = Canvas(root, width=800, height=800, bg='black')
+c.pack()
+
+# Title text (unchanged design)
+c.create_text(100, 50, anchor='w', fill='orange', font='Arial 28 bold underline',
+              text='Blooket Live Countdown Calendar')
+
+# Retrieve events and initialize canvas text items for each event
+events = get_events()
+text_items = []
+start_y = 100
+for i in range(len(events)):
+    text_item = c.create_text(100, start_y + i * 40, anchor='w', fill='lightblue',
+                              font='Arial 28 bold', text='')
+    text_items.append(text_item)
+
+def update_countdowns():
+    now = datetime.now()
+    print("Current time:", now)
+    for i, event in enumerate(events):
+        name = event[0]
+        event_time = event[1]
+        time_left_str, color = get_time_left(event_time, now)
+        c.itemconfig(text_items[i], text=f"It is {time_left_str} until {name}", fill=color)
+    # Update the countdown every second
+    root.after(1000, update_countdowns)
+
+update_countdowns()
 root.mainloop()
-
-
