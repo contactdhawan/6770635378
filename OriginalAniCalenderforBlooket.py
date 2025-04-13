@@ -16,7 +16,10 @@ def getCurrentEvent(event_details):
 def get_events():
     # Change the event to something happening at 10:28 (22:28) today.
     return [
-        getCurrentEvent("Test Event,05/04/25 22:30"),
+    # Put events here, should be in the format "Event Name,DD/MM/YY HH:MM"
+        getCurrentEvent("Gold Quest-Infinite Coins Daily30mins,05/04/25 10:28"),
+        getCurrentEvent("Monster Brawl-Infinite Coins Daily30mins,05/04/25 10:30"),    
+        getCurrentEvent("Crypto Hack-Infinite Coins Daily30mins,05/04/25 12:30"),
         getCurrentEvent("Test Event 2,05/04/25 15:30"),
         getCurrentEvent("Test Event 3,06/04/25 15:30")
     ]
@@ -42,12 +45,12 @@ def get_time_left(future_datetime, now_datetime):
 
 # Setup the main GUI window
 root = Tk()
-c = Canvas(root, width=800, height=800, bg='black')
+c = Canvas(root, width=1500, height=1500, bg='black')
 c.pack()
 
 # Title text (unchanged design)
 c.create_text(100, 50, anchor='w', fill='orange', font='Arial 28 bold underline',
-              text='Blooket Live Countdown Calendar')
+              text='Blooket Live Countdown Calendar for SG Tournaments')
 
 # Retrieve events and initialize canvas text items for each event
 events = get_events()
