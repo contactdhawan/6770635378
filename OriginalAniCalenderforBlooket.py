@@ -17,9 +17,9 @@ def get_events():
     # Change the event to something happening at 10:28 (22:28) today.
     return [
     # Put events here, should be in the format "Event Name,DD/MM/YY HH:MM"
-        getCurrentEvent("Gold Quest-Infinite Coins Daily30mins,05/04/25 10:28"),
-        getCurrentEvent("Monster Brawl-Infinite Coins Daily30mins,05/04/25 10:30"),    
-        getCurrentEvent("Crypto Hack-Infinite Coins Daily30mins,05/04/25 12:30"),
+        getCurrentEvent("Gold Quest-Infinite Coins Daily30mins,14/04/25 16:28"),
+        getCurrentEvent("Monster Brawl-Infinite Coins Daily30mins,14/04/25 18:30"),    
+        getCurrentEvent("Crypto Hack-Infinite Coins Daily30mins,13/04/25 12:30"),
         getCurrentEvent("Test Event 2,05/04/25 15:30"),
         getCurrentEvent("Test Event 3,06/04/25 15:30")
     ]
