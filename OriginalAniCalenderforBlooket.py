@@ -16,14 +16,14 @@ def getCurrentEvent(event_details):
 def get_events():
     # Change the event to something happening at 10:28 (22:28) today.
     return [
-    # Put events here, should be in the format "Event Name,Time Settings, DD/MM/YY HH:MM" Hours should be 24-Hour setting.
-        getCurrentEvent("Gold Quest-Infinite Coins Daily30mins,01/05/25 18:00"),
-        getCurrentEvent("Monster Brawl-Infinite Coins Daily30mins,01/05/25 18:30"),    
-        getCurrentEvent("Crypto Hack-Infinite Coins Daily30mins,01/05/25 17:30"),
-        getCurrentEvent("Monster Brawl-Infinite Coins Daily 10 mins,01/05/25 15:30"),
-        getCurrentEvent("Fishing Frenzy-Infinite Coins Daily 10 mins,01/05/25 15:30"),
-        getCurrentEvent("Tower Defence-Infinite Coins Daily 10 mins,01/05/25 16:30"),
-        getCurrentEvent("Crypto Hack-Infinite Coins Daily10mins,01/05/25 19:30")
+    # Put events here, should be in the format "Event Name,DD/MM/YY HH:MM"
+        getCurrentEvent("Gold Quest-Infinite Coins Daily30mins,08/05/25 18:00"),
+        getCurrentEvent("Monster Brawl-Infinite Coins Daily30mins,08/05/25 18:30"),    
+        getCurrentEvent("Crypto Hack-Infinite Coins Daily30mins,08/05/25 17:30"),
+        getCurrentEvent("Monster Brawl- Infinite Coins Daily 10 mins,08/05/25 15:30"),
+        getCurrentEvent("Crypto Hack-Infinite Coins Daily10mins,08/05/25 19:30"),
+        getCurrentEvent("Fishing Frenzy-Infinite Coins-Daily30mins,08/05/25 20:30"),
+        getCurrentEvent("Tower Defence-Infinite Coins Daily30mins,08/05/25 21:30"),
     ]
 
 def get_time_left(future_datetime, now_datetime):
