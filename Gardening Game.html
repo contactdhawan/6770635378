@@ -1,3 +1,27 @@
+<!--
+  Ani's and Jai's Garden Game
+  - This is a simple browser-based garden game.
+  - You can buy seeds, plant them, use fertilizer and watering cans, and harvest crops.
+  - The game state is saved in localStorage under the key "garden_game_save".
+  - Use the Reset Game button (top left) to clear your progress and start over.
+  - All UI updates and game logic are handled in JavaScript below.
+  - Plants can be regrowing or single-harvest, depending on type.
+  - The garden info panel shows your play time and plant counts.
+  - The inventory panel shows your seeds and items.
+  - The gear shop lets you buy tools and power-ups.
+  - Each plant has a tooltip showing its growth status.
+  - Clicking a plant when ready will harvest it.
+  - Trowel lets you remove a plant early (if you have uses).
+  - Fertilizer and watering can speed up or finish growth.
+  - Harvest All instantly harvests all ready plants for double coins.
+  - The game auto-saves after every major action.
+  - The UI is updated every second to show elapsed time.
+  - All plant growth is handled with setTimeout and setInterval.
+  - The plant info panel gives details and lets you use items on a plant.
+  - The code is written to be easy to extend with new plants or features.
+  - All major functions are commented for clarity.
+  - Enjoy your gardening adventure! 🌱🌻🍓
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,9 +145,28 @@
       width: 350px;
       margin: 30px auto 0 auto;
     }
+    /* Reset button top left */
+    #resetGameBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #e57373;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.7em 1.2em;
+      font-size: 16px;
+      z-index: 1000;
+      box-shadow: 0 2px 8px #888;
+      cursor: pointer;
+    }
+    #resetGameBtn:hover {
+      background: #d32f2f;
+    }
   </style>
 </head>
 <body>
+  <button id="resetGameBtn">Reset Game</button>
   <h1>🌻 My Garden Game</h1>
   <div id="coinsDisplay">Coins: <span id="coins">100</span></div>
 
@@ -623,6 +666,29 @@
       }
     }
 
+    // --- Reset Button Logic ---
+    document.getElementById("resetGameBtn").onclick = function() {
+      if (confirm("Are you sure you want to reset your garden and start over?")) {
+        localStorage.removeItem("garden_game_save");
+        coins = 100;
+        trowelUses = 0;
+        harvestAllUses = 0;
+        gardenStartTime = Date.now();
+        Object.assign(inventory, {
+          sunflower: 0,
+          strawberry: 0,
+          blueberry: 0,
+          Tulip: 0,
+          Tomato: 0,
+          fertilizer: 0,
+          wateringCan: 0
+        });
+        document.getElementById("garden").innerHTML = "";
+        updateUI();
+        updateGardenInfo();
+      }
+    };
+
     window.addEventListener("DOMContentLoaded", loadGame);
 
     updateUI();
@@ -630,3 +696,9 @@
   </script>
 </body>
 </html>
+Hi, this is Ani and Jai's Garden Game! 🌱🌻🍓
+  This HTML file contains a simple browser-based garden game.
+  It allows players to buy seeds, plant them, use fertilizer and watering cans, and harvest crops.
+  The game state is saved in localStorage for persistence.
+  The UI is designed to be user-friendly and visually appealing.
+  Enjoy your gardening adventure! 🌱🌻🍓
